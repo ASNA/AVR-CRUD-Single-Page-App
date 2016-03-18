@@ -1,0 +1,26 @@
+﻿Using System
+Using System.Data
+Using System.Data.SqlClient
+Using System.Configuration
+Using System.Web
+
+BegClass Registry Access(*Public)
+
+	DclFld contactRepo Type(IContactRepository) Access(*Protected)
+
+	// Retrieves the ContactRepository service
+	BegFunc GetContactRepository Type(IContactRepository) Access(*Public)
+		If (contactRepo = *Nothing)
+			// Uses DataGate
+            // See the source file Data/DataGateContactRepository.vr for file definitions. 
+            // If these are present on your IBM i, you can use enable the DataGateContactRepository.
+			// contactRepo = *New DataGateContactRepository()
+
+			// Use SQL Server CE database in the App_Data folder. 
+			contactRepo = *New SqlContactRepository()
+		EndIf
+
+		LeaveSr contactRepo
+	EndFunc
+
+EndClass
